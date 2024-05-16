@@ -5,10 +5,12 @@ declare( strict_types=1 );
 namespace Blockify\Container;
 
 use Blockify\Container\Exceptions\ContainerException;
+use Blockify\Utilities\Debug;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionParameter;
+use function class_exists;
 use function is_callable;
 use function is_object;
 use function uniqid;
@@ -197,7 +199,7 @@ class Container implements ContainerInterface {
 		$id               = uniqid( static::class );
 		$this->log[ $id ] = [ $message, $exception ];
 
-		if ( Debug::is_enabled() ) {
+		if ( class_exists( '\\Blockify\\Utilities\\Debug' ) && Debug::is_enabled() ) {
 			Debug::console_log( $this->log[ $id ] );
 		}
 	}
